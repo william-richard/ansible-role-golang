@@ -1,0 +1,21 @@
+---
+# tasks file for golang
+
+- name: install golang
+  apt:
+    name: "golang={{ go_version }}*"
+    state: present
+
+- name: modify directory
+  file:
+    path: "{{ go_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: modify env
+  lineinfile:
+    dest: /etc/environment
+    regexp: '^GOPATH='
+    line: 'GOPATH="{{ go_path }}"'
