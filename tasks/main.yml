@@ -1,21 +1,31 @@
 ---
 # tasks file for golang
 
-- name: install golang
+- name: install tar
   apt:
-    name: "golang={{ go_version }}*"
+    name: tar
     state: present
 
-- name: modify directory
+- name: download golang
+  get_url:
+    url: "https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: "/usr/local/src/go{{ go_version }}.linux-amd64.tar.gz"
+
+- name: unarchive golang
+  unarchive:
+    src: "/usr/local/src/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: "{{ go_path }}"
+    copy: no
+
+- name: modify simlink
   file:
-    path: "{{ go_path }}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
+    src: "{{ go_path }}/go/bin/go"
+    path: /usr/local/bin/go
+    state: link
+    force: yes
 
 - name: modify env
   lineinfile:
     dest: /etc/environment
     regexp: '^GOPATH='
-    line: 'GOPATH="{{ go_path }}"'
+    line: 'GOPATH="{{ go_path }}/go/lib'
