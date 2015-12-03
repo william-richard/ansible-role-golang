@@ -12,8 +12,8 @@ none
 Available variables are listed below, along with default values:
 
 ```yml
-go_version: ""
-go_path: /usr/local/go
+go_version: "1.5"
+go_path: /usr/local
 ```
 
 ## Dependencies
