@@ -28,4 +28,4 @@
   lineinfile:
     dest: /etc/environment
     regexp: '^GOPATH='
-    line: 'GOPATH="{{ go_path }}/go/lib'
+    line: 'GOPATH="{{ go_path }}/go/lib"'
